@@ -9,8 +9,8 @@
 #define NROWS 4
 #define NCOLUMNS 14
 
-const unsigned rowPins[4] = {16, 15, 14, 23};
-const unsigned columnPins[14] = {22, 21, 20, 19, 18, 13, 8, 7, 6, 5, 4, 3, 2, 17};
+const unsigned char rowPins[4] = {16, 15, 14, 23};
+const unsigned char columnPins[14] = {22, 21, 20, 19, 18, 13, 8, 7, 6, 5, 4, 3, 2, 17};
 
 //
 //
@@ -131,7 +131,7 @@ void loop() {
     
   for(byte col = 0; col < NCOLUMNS; col++) {
     for(byte row = 0; row < NROWS; row++) {
-      if((millis() - lastPress[row][col]) > 10) {
+      if((currMillis - lastPress[row][col]) > 30) {
 
         // Select layer
         if((KEY_MOD_LEFT(currArrayState) == 0) && (KEY_MOD_RIGHT(currArrayState) == 0)) {
@@ -164,10 +164,12 @@ void loop() {
   }
 
   if((currMillis - lastHeartBeat) > 200) {
-    for(int i = 0; i < 256; i++) {
-      if((prevHidState[i] == 0) && (currHidState[i])) {
-        Keyboard.release(i);
-      }
+    uint8_t sum = 0;
+    for(int i = 0; i < 265; i++) {
+      sum += currHidState[i];
+    }
+    if(sum == 0) {
+      Keyboard.releaseAll();
     }
     lastHeartBeat = currMillis;
   }
