@@ -165,7 +165,7 @@ void loop() {
 
   if((currMillis - lastHeartBeat) > 200) {
     uint8_t sum = 0;
-    for(int i = 0; i < 265; i++) {
+    for(int i = 0; i < 256; i++) {
       sum += currHidState[i];
     }
     if(sum == 0) {
