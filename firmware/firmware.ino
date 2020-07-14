@@ -52,9 +52,13 @@ const unsigned char arrowsLayer[4][14] = {
 //
 //
 
-// 2D array to hold state of switch array
+// 2D array to hold raw state of switch array
 unsigned char prevArrayState[NROWS][NCOLUMNS];
 unsigned char currArrayState[NROWS][NCOLUMNS];
+
+// Variables to hold cleaned up (debounced) state of MOD keys
+unsigned char leftModCleanState;
+unsigned char rightModCleanState;
 
 // Array to hold state of USB HID keys
 unsigned char prevHidState[256];
@@ -128,22 +132,32 @@ void loop() {
     }
   }
   */
+
+  if((currMillis - KEY_MOD_LEFT(lastPress)) > 30) {
+    leftModCleanState = KEY_MOD_LEFT(currArrayState);
+  }
+  if((currMillis - KEY_MOD_RIGHT(lastPress)) > 30) {
+    rightModCleanState = KEY_MOD_RIGHT(currArrayState);
+  }
     
   for(byte col = 0; col < NCOLUMNS; col++) {
     for(byte row = 0; row < NROWS; row++) {
       if((currMillis - lastPress[row][col]) > 30) {
 
         // Select layer
-        if((KEY_MOD_LEFT(currArrayState) == 0) && (KEY_MOD_RIGHT(currArrayState) == 0)) {
+        if((leftModCleanState == 0) && (rightModCleanState == 0)) {
+          currHidState[symbolsLayer[row][col]] = 0;
+          currHidState[numbersLayer[row][col]] = 0;
+          currHidState[arrowsLayer[row][col]] = 0;
           currHidState[lettersLayer[row][col]] = currArrayState[row][col];
         }
-        else if((KEY_MOD_LEFT(currArrayState) == 1) && (KEY_MOD_RIGHT(currArrayState) == 0)) {
+        else if((leftModCleanState == 1) && (rightModCleanState == 0)) {
           currHidState[symbolsLayer[row][col]] = currArrayState[row][col];
         }
-        else if((KEY_MOD_LEFT(currArrayState) == 0) && (KEY_MOD_RIGHT(currArrayState) == 1)) {
+        else if((leftModCleanState == 0) && (rightModCleanState == 1)) {
           currHidState[numbersLayer[row][col]] = currArrayState[row][col];
         }
-        else if((KEY_MOD_LEFT(currArrayState) == 1) && (KEY_MOD_RIGHT(currArrayState) == 1)) {
+        else if((leftModCleanState == 1) && (rightModCleanState == 1)) {
           currHidState[arrowsLayer[row][col]] = currArrayState[row][col];
         }
         
