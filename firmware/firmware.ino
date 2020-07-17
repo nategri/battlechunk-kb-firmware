@@ -26,7 +26,7 @@ const unsigned char lettersLayer[4][14] = {
 };
 
 const unsigned char symbolsLayer[4][14] = {
-  {'~', 0, '(', ')', '#', '`', 0, 0, 0, 0, 0, 0, 0, 0},
+  {'|', 0, '(', ')', '#', '`', 0, 0, 0, 0, 0, 0, 0, '~'},
   {KEY_LEFT_CTRL, '{', '}', '"', '@', 0, 0, 0, 0, 0, 0, 0, 0, 0},
   {0, KEY_LEFT_SHIFT, '[', ']', '\'', '\\', 0, 0, 0, 0, 0, KEY_RIGHT_SHIFT, 0, 0},
   {0, KEY_LEFT_ALT, KEY_LEFT_GUI, '_', KEY_RIGHT_GUI, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -35,7 +35,7 @@ const unsigned char symbolsLayer[4][14] = {
 const unsigned char numbersLayer[4][14] = {
   {0, 0, '7', '8', '9', 0, 0, 0, 0, 0, '*', '%', '?', '!'},
   {KEY_LEFT_CTRL, '4', '5', '6', 0, 0, 0, 0, 0, '-', '+', '=', 0, 0},
-  {0, 0, '1', '2', '3', 0, 0, '<', '>', '^', '$', 0, 0, 0},
+  {0, 0, '1', '2', '3', '.', 0, '<', '>', '^', '$', 0, 0, 0},
   {0, KEY_LEFT_ALT, '0', ',', KEY_RIGHT_GUI, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
